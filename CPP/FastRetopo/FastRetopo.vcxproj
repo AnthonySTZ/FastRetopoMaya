@@ -146,6 +146,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="pluginMain.cpp" />
+    <ClCompile Include="RetopoCommands.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RetopoCommands.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

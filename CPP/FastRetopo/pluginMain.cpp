@@ -1,5 +1,8 @@
 #include <maya/MFnPlugin.h>
 #include <maya/MGlobal.h>
+#include "RetopoCommands.h"
+
+const MString RetopoCmd = "fastRetopo";
 
 MStatus initializePlugin(MObject obj)
 {
@@ -8,6 +11,8 @@ MStatus initializePlugin(MObject obj)
 
 	MFnPlugin fnPlugin(obj, pluginVendor, pluginVersion);
 	MGlobal::displayInfo("Plugin has been initialized!");
+
+	MStatus status = fnPlugin.registerCommand(RetopoCmd, RetopoCommand::creator);
 
 	return (MS::kSuccess);
 }
