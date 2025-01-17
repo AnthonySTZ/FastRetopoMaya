@@ -2,19 +2,15 @@
 
 MStatus Retopo::RetopoMeshes()
 {
+    MStatus status;
 
     MSelectionList selection;
-    MGlobal::getActiveSelectionList(selection);
-
-    if (selection.isEmpty())
-    {
-        MGlobal::displayWarning("No objects selected!");
-        return MS::kFailure;
-    }
+    status = GetSelectedMesh(&selection);
+    if (!status) return MS::kFailure;
 
     MDagPath item;
     MObject component;
-    MStatus status = selection.getDagPath(0, item, component); /* Get only the first selected objects TODO: Loop over all selected objects */
+    status = selection.getDagPath(0, item, component); /* Get only the first selected objects TODO: Loop over all selected objects */
     if (!status)
     {
         MGlobal::displayError("Failed to get DAG path: " + status.errorString());
@@ -38,4 +34,17 @@ MStatus Retopo::RetopoMeshes()
 
     return MS::kSuccess;
 
+}
+
+MStatus Retopo::GetSelectedMesh(MSelectionList* selection)
+{
+    MGlobal::getActiveSelectionList(*selection);
+
+    if (selection->isEmpty())
+    {
+        MGlobal::displayWarning("No objects selected!");
+        return MS::kFailure;
+    }
+
+    return MS::kSuccess;
 }

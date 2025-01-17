@@ -9,6 +9,10 @@
 #include <maya/MString.h>
 #include <maya/MObject.h>
 
+struct Mesh {
+	MDagPath dagPath;
+	MObject component;
+};
 
 class Retopo
 {
@@ -16,4 +20,7 @@ class Retopo
 public: 
 	static MStatus RetopoMeshes();
 
+private:
+
+	static MStatus GetSelectedMesh(MSelectionList *selection);
 };

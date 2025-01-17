@@ -19,6 +19,8 @@ MStatus initializePlugin(MObject obj)
 
 MStatus uninitializePlugin(MObject obj)
 {
+	MFnPlugin plugin(obj);
+	CHECK_MSTATUS(plugin.deregisterCommand(RetopoCmd));
 	MGlobal::displayInfo("Plugin has been uninitialize!");
 
 	return (MS::kSuccess);
