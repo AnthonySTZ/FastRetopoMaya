@@ -21,9 +21,15 @@
     <ClCompile Include="RetopoCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Retopo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RetopoCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Retopo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
