@@ -14,22 +14,11 @@ MStatus Retopo::RetopoMeshes()
 
     Mesh selected_mesh;
     CHECK_STATUS(GetMeshFromSelection(&selected_mesh, selection, 0));
-
-
     MGlobal::displayInfo(selected_mesh.dagPath.fullPathName());
 
-    MItMeshVertex vert_it(selected_mesh.dagPath, selected_mesh.component, &status);
-    if (!status)
-    {
-        MGlobal::displayError("Failed to get Vertex iteration: " + status.errorString());
-        return status;
-    }
-
-    MString vert_count_display;
-    int vert_nb = vert_it.count();
-
-    vert_count_display += vert_nb;
-    MGlobal::displayInfo(vert_count_display);
+    unsigned int vertices_nb;
+    CHECK_STATUS(VerticesCount(selected_mesh, &vertices_nb));
+    MGlobal::displayInfo(MString() + vertices_nb);
 
     return MS::kSuccess;
 
@@ -64,3 +53,19 @@ MStatus Retopo::GetMeshFromSelection(Mesh *mesh, MSelectionList selection, unsig
 
     return MS::kSuccess;
 }
+
+MStatus Retopo::VerticesCount(Mesh mesh, unsigned int* vertices_count)
+{
+    MStatus status;
+    MItMeshVertex vert_it(mesh.dagPath, mesh.component, &status);
+    if (!status)
+    {
+        MGlobal::displayError("Failed to get Vertex iteration: " + status.errorString());
+        return status;
+    }
+
+    *vertices_count = vert_it.count();
+
+    return MS::kSuccess;
+}
+
