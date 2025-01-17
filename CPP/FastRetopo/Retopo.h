@@ -23,4 +23,5 @@ public:
 private:
 
 	static MStatus GetSelectedMesh(MSelectionList *selection);
+	static MStatus GetMeshFromSelection(Mesh *mesh, MSelectionList selection, unsigned int index);
 };

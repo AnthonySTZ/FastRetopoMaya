@@ -1,25 +1,24 @@
 #include "Retopo.h"
 
+#define CHECK_STATUS(status)            \
+{                                       \
+    if (!status) return MS::kFailure;   \
+}                                       \
+
 MStatus Retopo::RetopoMeshes()
 {
     MStatus status;
 
     MSelectionList selection;
-    status = GetSelectedMesh(&selection);
-    if (!status) return MS::kFailure;
+    CHECK_STATUS(GetSelectedMesh(&selection));
 
-    MDagPath item;
-    MObject component;
-    status = selection.getDagPath(0, item, component); /* Get only the first selected objects TODO: Loop over all selected objects */
-    if (!status)
-    {
-        MGlobal::displayError("Failed to get DAG path: " + status.errorString());
-        return status;
-    }
+    Mesh selected_mesh;
+    CHECK_STATUS(GetMeshFromSelection(&selected_mesh, selection, 0));
 
-    MGlobal::displayInfo(item.fullPathName());
 
-    MItMeshVertex vert_it(item, component, &status);
+    MGlobal::displayInfo(selected_mesh.dagPath.fullPathName());
+
+    MItMeshVertex vert_it(selected_mesh.dagPath, selected_mesh.component, &status);
     if (!status)
     {
         MGlobal::displayError("Failed to get Vertex iteration: " + status.errorString());
@@ -45,6 +44,23 @@ MStatus Retopo::GetSelectedMesh(MSelectionList* selection)
         MGlobal::displayWarning("No objects selected!");
         return MS::kFailure;
     }
+
+    return MS::kSuccess;
+}
+
+MStatus Retopo::GetMeshFromSelection(Mesh *mesh, MSelectionList selection, unsigned int index)
+{
+    MDagPath item;
+    MObject component;
+    MStatus status = selection.getDagPath(index, item, component);
+    if (!status)
+    {
+        MGlobal::displayError("Failed to get DAG path: " + status.errorString());
+        return status;
+    }
+
+    mesh->dagPath = item;
+    mesh->component = component;
 
     return MS::kSuccess;
 }
