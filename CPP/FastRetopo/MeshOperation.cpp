@@ -18,15 +18,11 @@ MStatus MeshOperations::LaplacianSmooth(Graph* graph)
             int neighbour_id = neighbours[neighbour_idx];
             MPoint neighbour_position = graph->vertices[neighbour_id].position;
 
-            result_pos[0] += neighbour_position[0];
-            result_pos[1] += neighbour_position[1];
-            result_pos[2] += neighbour_position[2];
+            result_pos += neighbour_position;
         }
 
         if (neighbours_nb) {
-            result_pos[0] /= neighbours.length();
-            result_pos[1] /= neighbours.length();
-            result_pos[2] /= neighbours.length();
+            result_pos *= 1.0f / neighbours_nb;
         }
         
         graph->vertices[point_idx].position = result_pos;
