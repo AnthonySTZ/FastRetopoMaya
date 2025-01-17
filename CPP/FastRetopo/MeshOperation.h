@@ -10,6 +10,9 @@
 #include <maya/MObject.h>
 #include <maya/MFnMesh.h>
 
+#include <chrono>
+using namespace std::chrono;
+
 #include "macros.h"
 
 struct Mesh {

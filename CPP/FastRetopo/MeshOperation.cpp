@@ -7,6 +7,7 @@ MStatus MeshOperations::LaplacianSmooth(Mesh mesh)
     MFnMesh fnMesh(mesh.dagPath);
 
     MGlobal::displayInfo("Processing Laplacian Smooth...");
+    auto start = high_resolution_clock::now();
     
     MItMeshVertex vert_it(mesh.dagPath, mesh.component, &status);
     if (!status)
@@ -40,6 +41,14 @@ MStatus MeshOperations::LaplacianSmooth(Mesh mesh)
         vert_it.setPosition(result_pos, MSpace::kWorld);
 
     }
+
+    /* Calc duration */
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    MString duration_info = "Laplacian Smooth : ";
+    duration_info += (float)duration.count() / 1000;
+    duration_info += " ms.";
+    MGlobal::displayInfo(duration_info);
 
     return MS::kSuccess;
 }
