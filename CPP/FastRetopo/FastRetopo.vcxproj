@@ -151,6 +151,7 @@
     <ClCompile Include="RetopoCommands.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="macros.h" />
     <ClInclude Include="MeshOperation.h" />
     <ClInclude Include="Retopo.h" />
     <ClInclude Include="RetopoCommands.h" />

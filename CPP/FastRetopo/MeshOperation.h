@@ -8,6 +8,9 @@
 #include <maya/MItMeshVertex.h>
 #include <maya/MString.h>
 #include <maya/MObject.h>
+#include <maya/MFnMesh.h>
+
+#include "macros.h"
 
 struct Mesh {
 	MDagPath dagPath;

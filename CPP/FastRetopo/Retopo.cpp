@@ -1,32 +1,28 @@
 #include "Retopo.h"
 
-#define CHECK_STATUS(status)            \
-{                                       \
-    if (!status) return MS::kFailure;   \
-}                                       \
 
 MStatus Retopo::RetopoMeshes()
 {
     MStatus status;
 
     MSelectionList selection;
-    CHECK_STATUS(GetSelectedMesh(&selection));
+    CHECK_STATUS(GetSelection(&selection), "Error getting selection.");
 
     Mesh selected_mesh;
-    CHECK_STATUS(GetMeshFromSelection(&selected_mesh, selection, 0));
+    CHECK_STATUS(GetMeshFromSelection(&selected_mesh, selection, 0), "Error getting selected mesh.");
     MGlobal::displayInfo(selected_mesh.dagPath.fullPathName());
 
     unsigned int vertices_nb;
-    CHECK_STATUS(MeshOperations::VerticesCount(selected_mesh, &vertices_nb));
+    CHECK_STATUS(MeshOperations::VerticesCount(selected_mesh, &vertices_nb), "Error getting vertices number.");
     MGlobal::displayInfo(MString("Selected mesh contained : ") + vertices_nb + " vertices.");
 
-    CHECK_STATUS(MeshOperations::LaplacianSmooth(selected_mesh));
+    CHECK_STATUS(MeshOperations::LaplacianSmooth(selected_mesh), "Error laplacian smooth.");
 
     return MS::kSuccess;
 
 }
 
-MStatus Retopo::GetSelectedMesh(MSelectionList* selection)
+MStatus Retopo::GetSelection(MSelectionList* selection)
 {
     MGlobal::getActiveSelectionList(*selection);
 
