@@ -18,7 +18,7 @@ MStatus Retopo::RetopoMeshes()
 
     unsigned int vertices_nb;
     CHECK_STATUS(VerticesCount(selected_mesh, &vertices_nb));
-    MGlobal::displayInfo(MString() + vertices_nb);
+    MGlobal::displayInfo(MString("Selected mesh contained : ") + vertices_nb + " vertices.");
 
     return MS::kSuccess;
 
