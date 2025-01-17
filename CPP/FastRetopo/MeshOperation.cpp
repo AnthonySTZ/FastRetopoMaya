@@ -1,45 +1,5 @@
 #include "MeshOperation.h"
 
-MStatus MeshOperations::LaplacianSmooth(Graph* graph)
-{   
-    MStatus status;
-
-    MGlobal::displayInfo("Processing Laplacian Smooth...");
-    auto start = high_resolution_clock::now();
-
-    for (int point_idx = 0; point_idx < graph->vertices.size(); point_idx++) {
-
-        MPoint result_pos = { 0, 0, 0 };
-
-        MIntArray neighbours = graph->neighborhood_relations[point_idx];
-        unsigned int neighbours_nb = neighbours.length();
-        for (int neighbour_idx = 0; neighbour_idx < neighbours_nb; neighbour_idx++)
-        {
-            int neighbour_id = neighbours[neighbour_idx];
-            MPoint neighbour_position = graph->vertices[neighbour_id].position;
-
-            result_pos += neighbour_position;
-        }
-
-        if (neighbours_nb) {
-            result_pos *= 1.0f / neighbours_nb;
-        }
-        
-        graph->vertices[point_idx].position = result_pos;
-
-    }
-
-    /* Calc duration */
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    MString duration_info = "Laplacian Smooth : ";
-    duration_info += (float)duration.count() / 1000;
-    duration_info += " ms.";
-    MGlobal::displayInfo(duration_info);
-
-    return MS::kSuccess;
-}
-
 
 MStatus MeshOperations::VerticesCount(Mesh mesh, unsigned int* vertices_count)
 {
@@ -98,6 +58,14 @@ MStatus MeshOperations::ApplyGraphToMesh(Graph graph, Mesh mesh)
     }
 
     CHECK_STATUS(fnMesh.setPoints(points), "Setting points positions.");
+
+    return MS::kSuccess;
+}
+
+MStatus MeshOperations::ComputeOrientationField(Graph graph, OrientationField* orientation_field)
+{
+
+
 
     return MS::kSuccess;
 }

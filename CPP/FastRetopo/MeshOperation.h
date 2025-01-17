@@ -15,6 +15,7 @@
 using namespace std::chrono;
 
 #include <vector>
+#include <math.h>
 
 #include "macros.h"
 
@@ -35,11 +36,19 @@ struct Graph{
 
 };
 
+
+struct OrientationField {
+
+	unsigned int so;
+	std::vector<MVector> representative_vectors;
+
+};
+
 class MeshOperations
 {
 public:
-	static MStatus LaplacianSmooth(Graph* graph);
 	static MStatus VerticesCount(Mesh mesh, unsigned int* vertices_count);
 	static MStatus ComputeVerticesGraph(Mesh mesh, Graph* graph);
 	static MStatus ApplyGraphToMesh(Graph graph, Mesh mesh);
+	static MStatus ComputeOrientationField(Graph graph, OrientationField* orientation_field);
 };

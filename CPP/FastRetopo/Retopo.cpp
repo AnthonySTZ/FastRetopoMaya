@@ -18,8 +18,8 @@ MStatus Retopo::RetopoMeshes()
     
     Graph mesh_graph;
     CHECK_STATUS(MeshOperations::ComputeVerticesGraph(selected_mesh, &mesh_graph), "Computing vertices graph.");
-    CHECK_STATUS(MeshOperations::LaplacianSmooth(&mesh_graph), "Error laplacian smooth.");
-    CHECK_STATUS(MeshOperations::ApplyGraphToMesh(mesh_graph, selected_mesh), "Applying graph to mesh.");
+
+    /*CHECK_STATUS(MeshOperations::ApplyGraphToMesh(mesh_graph, selected_mesh), "Applying graph to mesh.");*/
 
     return MS::kSuccess;
 
