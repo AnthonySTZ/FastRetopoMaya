@@ -15,8 +15,11 @@ MStatus Retopo::RetopoMeshes()
     unsigned int vertices_nb;
     CHECK_STATUS(MeshOperations::VerticesCount(selected_mesh, &vertices_nb), "Error getting vertices number.");
     MGlobal::displayInfo(MString("Selected mesh contained : ") + vertices_nb + " vertices.");
-
-    CHECK_STATUS(MeshOperations::LaplacianSmooth(selected_mesh), "Error laplacian smooth.");
+    
+    Graph mesh_graph;
+    CHECK_STATUS(MeshOperations::ComputeVerticesGraph(selected_mesh, &mesh_graph), "Computing vertices graph.");
+    CHECK_STATUS(MeshOperations::LaplacianSmooth(&mesh_graph), "Error laplacian smooth.");
+    CHECK_STATUS(MeshOperations::ApplyGraphToMesh(mesh_graph, selected_mesh), "Applying graph to mesh.");
 
     return MS::kSuccess;
 

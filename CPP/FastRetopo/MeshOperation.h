@@ -9,6 +9,7 @@
 #include <maya/MString.h>
 #include <maya/MObject.h>
 #include <maya/MFnMesh.h>
+#include <maya/MPointArray.h>
 
 #include <chrono>
 using namespace std::chrono;
@@ -23,20 +24,22 @@ struct Mesh {
 };
 
 struct Vertex {
-	double position[3];
-	double normal[3];
+	MPoint position;
+	MVector normal;
 };
 
 struct Graph{
 
 	std::vector<Vertex> vertices;
-	std::vector<std::vector<Vertex>> neighborhood_relations;
+	std::vector<MIntArray> neighborhood_relations;
 
 };
 
 class MeshOperations
 {
 public:
-	static MStatus LaplacianSmooth(Mesh mesh);
+	static MStatus LaplacianSmooth(Graph* graph);
 	static MStatus VerticesCount(Mesh mesh, unsigned int* vertices_count);
+	static MStatus ComputeVerticesGraph(Mesh mesh, Graph* graph);
+	static MStatus ApplyGraphToMesh(Graph graph, Mesh mesh);
 };
