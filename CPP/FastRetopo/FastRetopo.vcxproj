@@ -145,11 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MeshOperation.cpp" />
     <ClCompile Include="pluginMain.cpp" />
     <ClCompile Include="Retopo.cpp" />
     <ClCompile Include="RetopoCommands.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MeshOperation.h" />
     <ClInclude Include="Retopo.h" />
     <ClInclude Include="RetopoCommands.h" />
   </ItemGroup>

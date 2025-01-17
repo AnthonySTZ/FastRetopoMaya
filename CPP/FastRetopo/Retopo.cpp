@@ -17,8 +17,10 @@ MStatus Retopo::RetopoMeshes()
     MGlobal::displayInfo(selected_mesh.dagPath.fullPathName());
 
     unsigned int vertices_nb;
-    CHECK_STATUS(VerticesCount(selected_mesh, &vertices_nb));
+    CHECK_STATUS(MeshOperations::VerticesCount(selected_mesh, &vertices_nb));
     MGlobal::displayInfo(MString("Selected mesh contained : ") + vertices_nb + " vertices.");
+
+    CHECK_STATUS(MeshOperations::LaplacianSmooth(selected_mesh));
 
     return MS::kSuccess;
 
@@ -53,19 +55,3 @@ MStatus Retopo::GetMeshFromSelection(Mesh *mesh, MSelectionList selection, unsig
 
     return MS::kSuccess;
 }
-
-MStatus Retopo::VerticesCount(Mesh mesh, unsigned int* vertices_count)
-{
-    MStatus status;
-    MItMeshVertex vert_it(mesh.dagPath, mesh.component, &status);
-    if (!status)
-    {
-        MGlobal::displayError("Failed to get Vertex iteration: " + status.errorString());
-        return status;
-    }
-
-    *vertices_count = vert_it.count();
-
-    return MS::kSuccess;
-}
-
