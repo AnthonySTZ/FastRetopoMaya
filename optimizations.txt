@@ -1,6 +1,0 @@
-Base test_asset
-
-Laplacian Smooth : 19.42ms #Normal
-Laplacian Smooth : 0.17ms  #Use of the graph to cache vertices positions
-Laplacian Smooth : 0.15ms  #result_pos *= 1.0f / neighbours.length(); 3 divisions to only 1 multiplication and 1 division
-Laplacian Smooth : 0.145ms #Remove one unecessary compute of neighbours.length()
