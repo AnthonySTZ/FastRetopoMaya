@@ -19,6 +19,11 @@ MStatus Retopo::RetopoMeshes()
     Graph mesh_graph;
     CHECK_STATUS(MeshOperations::ComputeVerticesGraph(selected_mesh, &mesh_graph), "Computing vertices graph.");
 
+    OrientationField orient_field;
+    orient_field.so = 4;
+    CHECK_STATUS(MeshOperations::InitializeOrientationField(mesh_graph, &orient_field), "Initializing orientation field.");
+    CHECK_STATUS(MeshOperations::ComputeOrientationField(mesh_graph, &orient_field, 20), "Computing orientation field.");
+
     /*CHECK_STATUS(MeshOperations::ApplyGraphToMesh(mesh_graph, selected_mesh), "Applying graph to mesh.");*/
 
     return MS::kSuccess;

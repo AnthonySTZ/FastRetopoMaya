@@ -10,9 +10,9 @@
 #include <maya/MObject.h>
 #include <maya/MFnMesh.h>
 #include <maya/MPointArray.h>
+#include <maya/MMatrix.h>
+#include <maya/MTransformationMatrix.h>
 
-#include <chrono>
-using namespace std::chrono;
 
 #include <vector>
 #include <math.h>
@@ -39,7 +39,7 @@ struct Graph{
 
 struct OrientationField {
 
-	unsigned int so;
+	int so;
 	std::vector<MVector> representative_vectors;
 
 };
@@ -50,5 +50,12 @@ public:
 	static MStatus VerticesCount(Mesh mesh, unsigned int* vertices_count);
 	static MStatus ComputeVerticesGraph(Mesh mesh, Graph* graph);
 	static MStatus ApplyGraphToMesh(Graph graph, Mesh mesh);
-	static MStatus ComputeOrientationField(Graph graph, OrientationField* orientation_field);
+	static MStatus ComputeOrientationField(Graph graph, OrientationField* orientation_field, int max_iterations);
+	static MStatus InitializeOrientationField(Graph graph, OrientationField* orientation_field);
+
+private:
+	static int* get_pair_of_rotations(int so, MVector oi, MVector oj, MVector ni, MVector nj);
+	static MVector Rso(int so, MVector o, MVector n, int k);
+	static double angle_between_normalized(MVector v1, MVector v2);
+	static MVector project_on_plane(MVector v1, MVector plane_normal);
 };
