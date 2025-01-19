@@ -88,7 +88,7 @@ MStatus MeshOperations::ComputeOrientationField(Graph graph, OrientationField* o
                 int k_ij = best_rotations[0];
 
                 oi_prime += Rso(so, oj, ni, k_ij);
-                oi = project_on_plane(oi_prime, ni).normal();
+                oi = oi_prime.normal();
 
             }
 
